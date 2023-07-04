@@ -14,7 +14,6 @@ import {
   Legend,
 } from 'chart.js';
 import { Line as LineChart } from 'vue-chartjs';
-import * as chartConfig from './chartConfig.js';
 
 ChartJS.register(
   CategoryScale,
@@ -31,8 +30,36 @@ export default {
   components: {
     LineChart,
   },
-  data() {
-    return chartConfig;
+  props: {
+    chartData: {
+      type: Array,
+      required: true,
+    },
+  },
+  setup(props) {
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+    };
+    const data = {
+      labels: ['View', 'Leads', 'Opportunities', 'Closed/Won Opp'],
+      options: {
+      },
+      datasets: [
+        {
+          data: props.chartData,
+        },
+      ],
+    };
+    return {
+      options,
+      data,
+    };
   },
 };
 </script>
