@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <img :src="url" height="100" />
+    <img :src="url" width="150" />
   </div>
 </template>
 

@@ -48,14 +48,14 @@
             :props="props"
           >
             <template v-if="col.name === 'temperature'">
-              <vehicle-temperature :temperature="col.value" />
+              <vehicle-temperature :temperature="col.value" :key="props.row.id" />
             </template>
             <template v-else-if="col.name === 'fuel_type'">
-              <vehicle-label :text="props.row.fuel_type" />
-              <vehicle-label :text="props.row.status" color="warning" />
+              <vehicle-label :text="props.row.fuel_type" :key="props.row.id" />
+              <vehicle-label :text="props.row.status" color="warning" :key="props.row.id" />
             </template>
             <template v-else-if="col.name === 'image'">
-              <vehicle-image :make="props.row.make" :model="props.row.model" />
+              <vehicle-image :make="props.row.make" :model="props.row.model" :key="props.row.id" />
             </template>
             <template v-else>
               {{ col.value }}
@@ -64,7 +64,13 @@
         </q-tr>
         <q-tr v-show="props.expand" :props="props">
           <q-td colspan="100%" style="height: 300px;">
-            <VehicleChart :chart-data="[30, 50, 20, 100]" />
+            <VehicleChart
+              :chart-data="[
+                props.row.views,
+                props.row.leads,
+                props.row.opportunities,
+                props.row.closedOpportunities]"
+            />
           </q-td>
         </q-tr>
       </template>
@@ -85,6 +91,7 @@ import VehicleLabel from 'components/VehicleLabel.vue';
 const columns = [
   {
     name: 'image',
+    style: 'width: 200px;',
   },
   {
     name: 'make',
@@ -143,6 +150,10 @@ const rows = [
     temperature: Math.random(),
     status: 'New',
     price: '1000',
+    views: 100,
+    leads: 50,
+    opportunities: 30,
+    closedOpportunities: 10,
   },
   {
     id: 2,
@@ -154,6 +165,10 @@ const rows = [
     temperature: Math.random(),
     status: 'Km0',
     price: '2000',
+    views: 100,
+    leads: 50,
+    opportunities: 30,
+    closedOpportunities: 10,
   },
   {
     id: 3,
@@ -165,6 +180,10 @@ const rows = [
     temperature: Math.random(),
     status: 'New',
     price: '4000',
+    views: 100,
+    leads: 50,
+    opportunities: 30,
+    closedOpportunities: 10,
   },
   {
     id: 4,
@@ -176,6 +195,10 @@ const rows = [
     temperature: Math.random(),
     status: 'Used',
     price: '4900',
+    views: 100,
+    leads: 50,
+    opportunities: 30,
+    closedOpportunities: 10,
   },
 ];
 

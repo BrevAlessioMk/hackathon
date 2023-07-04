@@ -1,16 +1,16 @@
 <template>
   <div class="q-pa-md">
-    <q-badge rounded :label="text" :color="color" />
+    <q-chip rounded :label="text" :color="color" text-color="white" />
   </div>
 </template>
 
 <script>
-import { QBadge } from 'quasar';
+import { QChip } from 'quasar';
 
 export default {
   name: 'VehicleLabel',
   components: {
-    QBadge,
+    QChip,
   },
   props: {
     text: {
