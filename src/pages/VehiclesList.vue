@@ -18,7 +18,6 @@
 
       <template v-slot:header="props">
         <q-tr :props="props">
-          <q-th auto-width />
           <q-th
             v-for="col in props.cols"
             :key="col.name"
@@ -26,21 +25,12 @@
           >
             {{ col.label }}
           </q-th>
+          <q-th auto-width />
         </q-tr>
       </template>
 
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td  auto-width>
-            <q-btn
-              size="sm"
-              color="accent"
-              round
-              dense
-              @click="props.expand = !props.expand"
-              :icon="props.expand ? 'remove' : 'add'"
-            />
-          </q-td>
           <q-td
             v-for="col in props.cols"
             :key="col.name"
@@ -59,6 +49,15 @@
             <template v-else>
               {{ col.value }}
             </template>
+          </q-td>
+          <q-td  auto-width>
+            <q-btn
+              size="sm"
+              color="gray"
+              flat
+              @click="props.expand = !props.expand"
+              :icon="props.expand ? 'expand_less' : 'expand_more'"
+            />
           </q-td>
         </q-tr>
         <q-tr v-show="props.expand" :props="props">
