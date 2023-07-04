@@ -4,7 +4,7 @@
       <q-toolbar>
 
         <q-toolbar-title>
-          Hackathon Team 2
+          HotStock
         </q-toolbar-title>
       </q-toolbar>
     </q-header>

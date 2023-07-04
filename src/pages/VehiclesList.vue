@@ -2,7 +2,6 @@
   <div class="q-pa-md">
     <q-table
       flat bordered
-      title="ColdSparks"
       :rows="rows"
       :columns="columns"
       row-key="id"
