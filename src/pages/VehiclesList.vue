@@ -7,6 +7,10 @@
       row-key="id"
       :filter="filter"
       :sort-method="customSort"
+      :pagination="{
+        page: 1,
+        rowsPerPage: 50
+      }"
     >
       <template v-slot:top-right>
         <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
@@ -37,7 +41,11 @@
             :props="props"
           >
             <template v-if="col.name === 'temperature'">
-              <vehicle-temperature :vehicle="props.row" :key="props.row.id" />
+              <vehicle-temperature
+                :vehicle="props.row"
+                :key="props.row.id"
+                @temperatureLoaded="props.row.temperature = $event"
+              />
             </template>
             <template v-else-if="col.name === 'fuel_type'">
               <vehicle-label :text="props.row.fuel_type" :key="props.row.id" />
@@ -84,7 +92,14 @@ import VehicleChart from 'components/VehicleChart.vue';
 import VehicleTemperature from 'components/VehicleTemperature.vue';
 import VehicleImage from 'components/VehicleImage.vue';
 import VehicleLabel from 'components/VehicleLabel.vue';
-import { vehicles } from 'src/data/vehicles';
+import { vehicles as rawVehicles } from 'src/data/vehicles';
+
+const vehicles = rawVehicles.map((v, i) => ({
+  ...v,
+  id: i,
+  temperature: null,
+  mockTemperature: Math.random(),
+}));
 
 const columns = [
   {
@@ -149,7 +164,7 @@ export default {
     return {
       filter: ref(''),
       columns,
-      vehicles: vehicles.map((v, i) => ({ ...v, id: i })),
+      vehicles,
       customSort: (dataRow, sortBy, descending) => {
         const data = [...dataRow];
 
@@ -173,6 +188,3 @@ export default {
 
 };
 </script>
-
-<style>
-</style>
