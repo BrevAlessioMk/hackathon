@@ -1,7 +1,7 @@
 <template>
   <Suspense>
     <template #default>
-      <q-icon v-if="temperature" :name="iconName" :color="iconColor" size="30px" />
+      <q-icon v-if="temperature !== null" :name="iconName" :color="iconColor" size="30px" />
       <q-circular-progress v-else indeterminate rounded color="primary" size="lg" />
     </template>
     <template #fallback>
