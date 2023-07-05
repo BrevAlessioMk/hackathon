@@ -17,7 +17,6 @@ export default {
     }).format(props.price));
 
     watch(props.price, (value) => {
-      console.log('enn');
       formattedPrice.value = new Intl.NumberFormat('it-IT', {
         style: 'currency',
         currency: 'EUR',

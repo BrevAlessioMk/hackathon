@@ -194,7 +194,6 @@ export default {
       vehicles,
       reactiveVehicles,
       setupVehicles(value, id) {
-        console.log('quiiii', value);
         reactiveVehicles.value[id].price = value;
       },
       customSort: (dataRow, sortBy, descending) => {
