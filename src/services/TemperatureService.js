@@ -8,7 +8,7 @@ export class TemperatureService {
   static async getTemperature(vehicleData) {
     try {
       const temperature = await httpClient.post('/routes/orchestrator/endpoints/hackathon/predict', vehicleData);
-      return temperature.data.prediction;
+      return parseFloat(temperature.data.prediction);
     } catch {
       return null;
     }

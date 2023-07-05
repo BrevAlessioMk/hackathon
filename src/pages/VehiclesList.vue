@@ -99,7 +99,6 @@ const vehicles = rawVehicles.map((v, i) => ({
   ...v,
   id: i,
   temperature: null,
-  mockTemperature: Math.random(),
 }));
 
 const columns = [

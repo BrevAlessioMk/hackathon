@@ -31,8 +31,7 @@ export default {
     };
   },
   async mounted() {
-    this.temperature = await TemperatureService.getTemperature(this.vehicle)
-      ?? this.vehicle.mockTemperature;
+    this.temperature = await TemperatureService.getTemperature(this.vehicle);
     this.$emit('temperature-loaded', this.temperature);
     if (this.temperature > 0.5) {
       this.iconName = 'local_fire_department';
