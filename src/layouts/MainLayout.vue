@@ -1,8 +1,8 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="bg-grey-8 text-white">
-        <q-toolbar-title>
+      <q-toolbar class="bg-grey-4 ">
+        <q-toolbar-title class="text-h4 text-red-8 text-weight-bold">
           HotStock
         </q-toolbar-title>
       </q-toolbar>

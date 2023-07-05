@@ -39,6 +39,7 @@
             v-for="col in props.cols"
             :key="col.name"
             :props="props"
+            class="text-left"
           >
             <template v-if="col.name === 'temperature'">
               <vehicle-temperature
@@ -105,6 +106,7 @@ const columns = [
   {
     name: 'image',
     style: 'width: 200px;',
+    align: 'left',
   },
   {
     name: 'make',
@@ -112,10 +114,11 @@ const columns = [
     required: true,
     label: 'Make',
     sortable: false,
+    align: 'left',
   },
   {
     name: 'model',
-    align: 'center',
+    align: 'left',
     label: 'Model',
     field: 'model',
     sortable: false,
@@ -125,24 +128,28 @@ const columns = [
     label: 'Version',
     field: 'version',
     sortable: false,
+    align: 'left',
   },
   {
     name: 'fuel_type',
     label: 'Fuel type',
     field: 'fuel_type',
     sortable: false,
+    align: 'left',
   },
   {
     name: 'country',
     label: 'Country',
     field: 'country',
     sortable: false,
+    align: 'left',
   },
   {
     name: 'temperature',
     label: 'Temperature',
     field: 'temperature',
     sortable: true,
+    align: 'left',
   },
 ];
 

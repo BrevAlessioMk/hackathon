@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div>
     <img
       :src="url"
       width="100"
