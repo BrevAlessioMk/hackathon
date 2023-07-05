@@ -82,10 +82,10 @@
           <q-td colspan="100%" style="height: 300px;">
             <VehicleChart
               :chart-data="[
-                props.row.sum_views,
-                props.row.sum_leads,
-                props.row.sum_opportunities,
-                props.row.sum_closed_won_opportunities]"
+                props.row.views,
+                props.row.leads,
+                props.row.opportunities,
+                props.row.closed_won_opportunities]"
             />
           </q-td>
         </q-tr>
