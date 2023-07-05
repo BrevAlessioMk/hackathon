@@ -33,12 +33,20 @@ export default {
   async mounted() {
     this.temperature = await TemperatureService.getTemperature(this.vehicle);
     this.$emit('temperature-loaded', this.temperature);
+    const price = this.temperature > 0.5
+      ? parseInt((Math.random() * (30_000 - 20_000)) + 20_000, 10)
+      : parseInt((Math.random() * (40_000 - 30_000)) + 30_000, 10);
+    this.$emit('price-loaded', price);
+
     if (this.temperature > 0.5) {
       this.iconName = 'local_fire_department';
       this.iconColor = 'negative';
-    } else {
+    } else if (this.temperature < 0.5) {
       this.iconName = 'ac_unit';
       this.iconColor = 'info';
+    } else {
+      this.iconName = 'device_thermostat';
+      this.iconColor = 'warning';
     }
   },
 };

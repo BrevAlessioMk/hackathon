@@ -9,7 +9,7 @@
       :sort-method="customSort"
       :pagination="{
         page: 1,
-        rowsPerPage: 50
+        rowsPerPage: 25
       }"
     >
       <template v-slot:top-right>
@@ -46,6 +46,7 @@
                 :vehicle="props.row"
                 :key="props.row.id"
                 @temperatureLoaded="props.row.temperature = $event"
+                @priceLoaded="setupVehicles($event, props.row.id)"
               />
             </template>
             <template v-else-if="col.name === 'fuel_type'">
@@ -54,8 +55,17 @@
             <template v-else-if="col.name === 'image'">
               <vehicle-image :make="props.row.make" :model="props.row.model" :key="props.row.id" />
             </template>
+            <template v-else-if="col.name === 'price'">
+              <vehicle-price
+                v-if="reactiveVehicles[props.row.id].price"
+                :price="reactiveVehicles[props.row.id].price"
+                :key="props.row.id"
+              />
+            </template>
             <template v-else>
-              {{ col.value }}
+              <div :key="props.row.id">
+                {{ col.value }}
+              </div>
             </template>
           </q-td>
           <q-td  auto-width>
@@ -94,12 +104,15 @@ import VehicleTemperature from 'components/VehicleTemperature.vue';
 import VehicleImage from 'components/VehicleImage.vue';
 import VehicleLabel from 'components/VehicleLabel.vue';
 import { vehicles as rawVehicles } from 'src/data/vehicles';
+import VehiclePrice from 'components/VehiclePrice.vue';
 
 const vehicles = rawVehicles.map((v, i) => ({
   ...v,
   id: i,
   temperature: null,
+  price: null,
 }));
+const reactiveVehicles = ref(vehicles);
 
 const columns = [
   {
@@ -144,6 +157,13 @@ const columns = [
     align: 'left',
   },
   {
+    name: 'price',
+    label: 'Price',
+    field: 'price',
+    sortable: false,
+    align: 'left',
+  },
+  {
     name: 'temperature',
     label: 'Temperature',
     field: 'temperature',
@@ -155,6 +175,7 @@ const columns = [
 export default {
   name: 'VehiclesList',
   components: {
+    VehiclePrice,
     VehicleTemperature,
     VehicleChart,
     VehicleImage,
@@ -171,6 +192,11 @@ export default {
       filter: ref(''),
       columns,
       vehicles,
+      reactiveVehicles,
+      setupVehicles(value, id) {
+        console.log('quiiii', value);
+        reactiveVehicles.value[id].price = value;
+      },
       customSort: (dataRow, sortBy, descending) => {
         const data = [...dataRow];
 
