@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <img
       :src="url"
-      width="150"
+      width="100"
       @error="replaceUrl"
     />
   </div>

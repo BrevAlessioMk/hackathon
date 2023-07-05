@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <q-table
       flat bordered
-      :rows="rows"
+      :rows="vehicles"
       :columns="columns"
       row-key="id"
       :filter="filter"
@@ -37,11 +37,10 @@
             :props="props"
           >
             <template v-if="col.name === 'temperature'">
-              <vehicle-temperature :temperature="col.value" :key="props.row.id" />
+              <vehicle-temperature :vehicle="props.row" :key="props.row.id" />
             </template>
             <template v-else-if="col.name === 'fuel_type'">
               <vehicle-label :text="props.row.fuel_type" :key="props.row.id" />
-              <vehicle-label :text="props.row.status" color="warning" :key="props.row.id" />
             </template>
             <template v-else-if="col.name === 'image'">
               <vehicle-image :make="props.row.make" :model="props.row.model" :key="props.row.id" />
@@ -64,10 +63,10 @@
           <q-td colspan="100%" style="height: 300px;">
             <VehicleChart
               :chart-data="[
-                props.row.views,
-                props.row.leads,
-                props.row.opportunities,
-                props.row.closedOpportunities]"
+                props.row.sum_views,
+                props.row.sum_leads,
+                props.row.sum_opportunities,
+                props.row.sum_closed_won_opportunities]"
             />
           </q-td>
         </q-tr>
@@ -85,6 +84,7 @@ import VehicleChart from 'components/VehicleChart.vue';
 import VehicleTemperature from 'components/VehicleTemperature.vue';
 import VehicleImage from 'components/VehicleImage.vue';
 import VehicleLabel from 'components/VehicleLabel.vue';
+import { vehicles } from 'src/data/vehicles';
 
 const columns = [
   {
@@ -129,75 +129,6 @@ const columns = [
     field: 'temperature',
     sortable: true,
   },
-  {
-    name: 'price',
-    label: 'Price',
-    field: 'price',
-    sortable: false,
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    make: 'fiat',
-    model: '500',
-    version: '500 Xl',
-    fuel_type: 'Benzina',
-    country: 'Italy',
-    temperature: Math.random(),
-    status: 'New',
-    price: '1000',
-    views: 100,
-    leads: 50,
-    opportunities: 30,
-    closedOpportunities: 10,
-  },
-  {
-    id: 2,
-    make: 'fiat',
-    model: '500',
-    version: '500 Xl',
-    fuel_type: 'Benzina',
-    country: 'Italy',
-    temperature: Math.random(),
-    status: 'Km0',
-    price: '2000',
-    views: 100,
-    leads: 50,
-    opportunities: 30,
-    closedOpportunities: 10,
-  },
-  {
-    id: 3,
-    make: 'fiat',
-    model: '500',
-    version: '500 Xl',
-    fuel_type: 'Benzina',
-    country: 'Italy',
-    temperature: Math.random(),
-    status: 'New',
-    price: '4000',
-    views: 100,
-    leads: 50,
-    opportunities: 30,
-    closedOpportunities: 10,
-  },
-  {
-    id: 4,
-    make: 'Audi',
-    model: 'a3',
-    version: 'audio a3 sport',
-    fuel_type: 'Diesel',
-    country: 'Germany',
-    temperature: Math.random(),
-    status: 'Used',
-    price: '4900',
-    views: 100,
-    leads: 50,
-    opportunities: 30,
-    closedOpportunities: 10,
-  },
 ];
 
 export default {
@@ -218,7 +149,7 @@ export default {
     return {
       filter: ref(''),
       columns,
-      rows,
+      vehicles: vehicles.map((v, i) => ({ ...v, id: i })),
       customSort: (dataRow, sortBy, descending) => {
         const data = [...dataRow];
 

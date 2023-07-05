@@ -1,27 +1,44 @@
 <template>
-  <q-icon :name="iconName" :color="iconColor" size="30px" />
+  <Suspense>
+    <template #default>
+      <q-icon v-if="temperature" :name="iconName" :color="iconColor" size="30px" />
+      <q-circular-progress v-else indeterminate rounded color="primary" size="lg" />
+    </template>
+    <template #fallback>
+      <q-circular-progress indeterminate rounded color="primary" size="lg" />
+    </template>
+  </Suspense>
 </template>
 
 <script>
+import { TemperatureService } from 'src/services/TemperatureService';
+import { QCircularProgress } from 'quasar';
+
 export default {
   name: 'VehicleTemperature',
+  components: { QCircularProgress },
   props: {
-    temperature: {
-      type: Number,
+    vehicle: {
+      type: Object,
       required: true,
     },
   },
-  setup(props) {
-    let iconName; let
-      iconColor;
-    if (props.temperature > 0.5) {
-      iconName = 'local_fire_department';
-      iconColor = 'negative';
+  data() {
+    return {
+      iconName: null,
+      iconColor: null,
+      temperature: null,
+    };
+  },
+  async mounted() {
+    this.temperature = await TemperatureService.getTemperature(this.vehicle) ?? 0.6;
+    if (this.temperature > 0.5) {
+      this.iconName = 'local_fire_department';
+      this.iconColor = 'negative';
     } else {
-      iconName = 'ac_unit';
-      iconColor = 'info';
+      this.iconName = 'ac_unit';
+      this.iconColor = 'info';
     }
-    return { iconName, iconColor };
   },
 };
 </script>
