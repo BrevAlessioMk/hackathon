@@ -60,7 +60,7 @@
           </q-td>
           <q-td  auto-width>
             <q-btn
-              size="sm"
+              size="md"
               color="gray"
               flat
               @click="props.expand = !props.expand"
